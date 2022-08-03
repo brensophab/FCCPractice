@@ -49,9 +49,32 @@ def game():
 
     
     print(f"Your cards are {player_cards}, current score: {player_sum}\n\n")
-    h_or_s = input("(h)it or (s)tay?\n")
-    while h_or_s.lower() == 'h':
-        
+    def s_behavior():
+        print(f"Your final value of your hand is {player_sum}. Computer is now drawing...")
+        computer_sum = sum(computer_cards)
+        while(computer_sum < 16):
+            
+            computer_cards.append(deal_card())
+            computer_sum = sum(computer_cards)
+            if computer_sum > 21 and 11 in computer_cards:
+                computer_sum -= 10
+            last_computer_card = computer_cards[len(computer_cards) - 1]
+            print(f"Computer draws {last_computer_card}\n")
+            time.sleep(1)
+            print(f"Computer drew {last_computer_card}. Computer total: {computer_sum}\t Computer cards: {computer_cards} ")
+            compare_scores()
+    def compare_scores():
+        computer_sum = sum(computer_cards)
+        player_sum = sum(player_cards)
+        if computer_sum > 21: # Computer bust player wins
+            last_computer_card = computer_cards[len(computer_cards) - 1]
+            print(f"Computer drew {last_computer_card} and busted with a {computer_sum}. Player wins!\n\n Player final deck: {player_cards}\n Player final score: {player_sum}")
+            playAgainPrompt()
+        elif computer_sum <= 21 and computer_sum > player_sum: # Computer wins no player bust
+            print(f"Computer score: {computer_sum}\t Computer cards: {computer_cards}\n\n Player score: {player_sum}\tPlayer cards:: {player_cards}. Computer wins! ")
+            playAgainPrompt()
+    def h_behavior():
+
         player_cards.append(deal_card())
         player_sum = sum(player_cards)
         last_card = player_cards[len(player_cards) - 1]
@@ -66,25 +89,52 @@ def game():
             playAgainPrompt()
         print(f"You drew {last_card}: \tNew value is {player_sum} (Cards on hand: {player_cards}")
         h_or_s = input("(h)it or (s)tay?\n")
-    if h_or_s == 's':
-        print(f"Your final value of your hand is {player_sum}. Computer is now drawing...")
-        while(computer_sum < 16):
+        if h_or_s == 'h':
+            h_behavior()
+        elif h_or_s == 's':
+            s_behavior()
+    h_or_s = input("(h)it or (s)tay?\n")
+    if h_or_s == 'h':
+        h_behavior()
+    elif h_or_s == 's':
+        s_behavior()
+    # while h_or_s.lower() == 'h':
+        
+    #     player_cards.append(deal_card())
+    #     player_sum = sum(player_cards)
+    #     last_card = player_cards[len(player_cards) - 1]
+    #     if player_sum > 21 and 11 in player_cards:
+    #         player_sum -= 10
+
+    #     if player_sum > 21:
+    #         print(f"You went over 21 (drew a {last_card}). You busted with a {player_sum}!")
+    #         playAgainPrompt()
+    #     if player_sum == 21:
+    #         print("You drew to 21! you win!")
+    #         playAgainPrompt()
+    #     print(f"You drew {last_card}: \tNew value is {player_sum} (Cards on hand: {player_cards}")
+    #     h_or_s = input("(h)it or (s)tay?\n") == 's'
             
-            computer_cards.append(deal_card())
-            computer_sum = sum(computer_cards)
-            if computer_sum > 21 and 11 in computer_cards:
-                computer_sum -= 10
-            last_computer_card = computer_cards[len(computer_cards) - 1]
-            print(f"Computer draws {last_computer_card}\n")
-            time.sleep(1)
-            print(f"Computer drew {last_computer_card}. Computer total: {computer_sum}\t Computer cards: {computer_cards} ")
-        def compare_scores():
-            if computer_sum > 21: # Computer bust player wins
-                print(f"Computer drew {last_computer_card} and busted with a {computer_sum}. Player wins!\n\n Player final deck: {player_cards}\n Player final score: {player_sum}")
-                playAgainPrompt()
-            elif computer_sum <= 21 and computer_sum > player_sum: # Computer wins no player bust
-                print(f"Computer score: {computer_sum}\t Computer cards: {computer_cards}\n\n Player score: {player_sum}\tPlayer cards:: {player_cards}. Computer wins! ")
-                playAgainPrompt()
+    
+    # if h_or_s == 's':
+    #     print(f"Your final value of your hand is {player_sum}. Computer is now drawing...")
+    #     while(computer_sum < 16):
+            
+    #         computer_cards.append(deal_card())
+    #         computer_sum = sum(computer_cards)
+    #         if computer_sum > 21 and 11 in computer_cards:
+    #             computer_sum -= 10
+    #         last_computer_card = computer_cards[len(computer_cards) - 1]
+    #         print(f"Computer draws {last_computer_card}\n")
+    #         time.sleep(1)
+    #         print(f"Computer drew {last_computer_card}. Computer total: {computer_sum}\t Computer cards: {computer_cards} ")
+    #     def compare_scores():
+    #         if computer_sum > 21: # Computer bust player wins
+    #             print(f"Computer drew {last_computer_card} and busted with a {computer_sum}. Player wins!\n\n Player final deck: {player_cards}\n Player final score: {player_sum}")
+    #             playAgainPrompt()
+    #         elif computer_sum <= 21 and computer_sum > player_sum: # Computer wins no player bust
+    #             print(f"Computer score: {computer_sum}\t Computer cards: {computer_cards}\n\n Player score: {player_sum}\tPlayer cards:: {player_cards}. Computer wins! ")
+    #             playAgainPrompt()
                 
         compare_scores()
 
