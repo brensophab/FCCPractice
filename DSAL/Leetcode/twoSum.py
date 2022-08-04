@@ -1,6 +1,6 @@
 def twoSum(nums:list[int], target: int):
-         required = {}
-         for i in range(len(nums)):
+         required = {} #where required is a hashmap val : index
+         for i, n in enumerate(nums):
              if target - nums[i] in required:
                 return [required[target - nums[i]],i]
          else:
